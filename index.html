@@ -1,1 +1,342 @@
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101010">
+  <title>StableVex</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #101010;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      animation: appear 0.8s ease;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: #f5d66e;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #999;
+      margin-bottom: 35px;
+      font-size: 14px;
+    }
+
+    .panel {
+      background: #191919;
+      border: 1px solid #333;
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 22px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 13px;
+      border-radius: 10px;
+      border: 1px solid #383838;
+      background: #101010;
+      color: white;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus {
+      border-color: #e6c65d;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .primary {
+      background: #e6c65d;
+      color: #171717;
+    }
+
+    .secondary {
+      background: #292929;
+      color: white;
+      border: 1px solid #444;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .divider {
+      color: #777;
+      margin: 18px 0;
+      font-size: 13px;
+    }
+
+    #message {
+      color: #e6c65d;
+      font-size: 13px;
+      margin-top: 16px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    #account {
+      display: none;
+    }
+
+    .status {
+      background: #222;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      color: #e6c65d;
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      margin-top: 25px;
+      color: #555;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <div class="logo">STABLEVEX</div>
+    <div class="subtitle">Yeni nesil yapay zekâ platformu</div>
+
+    <section class="panel" id="loginPanel">
+
+      <h2>Hesabına giriş yap</h2>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="E-posta adresin"
+        autocomplete="email"
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Şifren"
+        autocomplete="current-password"
+      >
+
+      <button class="primary" id="loginBtn">
+        Giriş yap
+      </button>
+
+      <button class="secondary" id="signupBtn">
+        Hesap oluştur
+      </button>
+
+      <div class="divider">VEYA</div>
+
+      <button class="secondary" id="googleBtn">
+        Google ile devam et
+      </button>
+
+      <div id="message"></div>
+
+    </section>
+
+    <section class="panel" id="account">
+
+      <h2>StableVex'e hoş geldin</h2>
+
+      <div class="status" id="userEmail"></div>
+
+      <p style="color:#aaa;font-size:14px;margin-bottom:15px;">
+        Hesabın başarıyla bağlandı.
+      </p>
+
+      <button class="primary" id="logoutBtn">
+        Çıkış yap
+      </button>
+
+    </section>
+
+    <footer>STABLEVEX © 2026</footer>
+
+  </main>
+
+  <script>
+    // SUPABASE AYARLARI
+
+    const SUPABASE_URL =
+      "https://ufrddyvqhfpwkvnhybdu.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_F5TX4lbb0T7_hSrEDCiSiw_44AT0M6z";
+
+    const client = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const message = document.getElementById("message");
+    const loginPanel = document.getElementById("loginPanel");
+    const accountPanel = document.getElementById("account");
+
+    function showMessage(text) {
+      message.textContent = text;
+    }
+
+    function setLoading(button, loading, originalText) {
+      button.disabled = loading;
+      button.textContent = loading ? "Bekle..." : originalText;
+    }
+
+    async function login() {
+      const button = document.getElementById("loginBtn");
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        showMessage("E-posta ve şifreni gir.");
+        return;
+      }
+
+      setLoading(button, true, "Giriş yap");
+
+      const { error } = await client.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      setLoading(button, false, "Giriş yap");
+
+      if (error) showMessage(error.message);
+    }
+
+    async function signup() {
+      const button = document.getElementById("signupBtn");
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        showMessage("E-posta ve şifreni gir.");
+        return;
+      }
+
+      if (password.length < 8) {
+        showMessage("Şifre en az 8 karakter olmalı.");
+        return;
+      }
+
+      setLoading(button, true, "Hesap oluştur");
+
+      const { error } = await client.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: window.location.origin
+        }
+      });
+
+      setLoading(button, false, "Hesap oluştur");
+
+      if (error) {
+        showMessage(error.message);
+      } else {
+        showMessage(
+          "Kayıt başarılı! E-posta doğrulama bağlantısını kontrol et."
+        );
+      }
+    }
+
+    async function googleLogin() {
+      const { error } = await client.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin
+        }
+      });
+
+      if (error) showMessage(error.message);
+    }
+
+    async function logout() {
+      const { error } = await client.auth.signOut();
+
+      if (error) showMessage(error.message);
+    }
+
+    function updateScreen(session) {
+      if (session) {
+        loginPanel.style.display = "none";
+        accountPanel.style.display = "block";
+
+        document.getElementById("userEmail").textContent =
+          session.user.email || "Google hesabı";
+      } else {
+        loginPanel.style.display = "block";
+        accountPanel.style.display = "none";
+      }
+    }
+
+    document.getElementById("loginBtn").onclick = login;
+    document.getElementById("signupBtn").onclick = signup;
+    document.getElementById("googleBtn").onclick = googleLogin;
+    document.getElementById("logoutBtn").onclick = logout;
+
+    client.auth.onAuthStateChange((event, session) => {
+      updateScreen(session);
+    });
+
+    client.auth.getSession().then(({ data }) => {
+      updateScreen(data.session);
+    });
+  </script>
+
+</body>
+  </html>
+  
