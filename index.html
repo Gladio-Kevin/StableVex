@@ -31,7 +31,7 @@
       width: 100%;
       max-width: 420px;
       text-align: center;
-      animation: appear 0.8s ease;
+      animation: appear .7s ease;
     }
 
     @keyframes appear {
@@ -40,7 +40,7 @@
     }
 
     .logo {
-      font-size: 38px;
+      font-size: 36px;
       font-weight: 900;
       letter-spacing: 3px;
       color: #f5d66e;
@@ -49,7 +49,7 @@
 
     .subtitle {
       color: #999;
-      margin-bottom: 35px;
+      margin-bottom: 30px;
       font-size: 14px;
     }
 
@@ -62,7 +62,14 @@
 
     h2 {
       font-size: 22px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
 
     input {
@@ -104,7 +111,7 @@
     }
 
     button:disabled {
-      opacity: 0.5;
+      opacity: .5;
       cursor: not-allowed;
     }
 
@@ -114,16 +121,12 @@
       font-size: 13px;
     }
 
-    #message {
+    .message {
       color: #e6c65d;
       font-size: 13px;
       margin-top: 16px;
       line-height: 1.5;
       overflow-wrap: anywhere;
-    }
-
-    #account {
-      display: none;
     }
 
     .status {
@@ -135,21 +138,40 @@
       overflow-wrap: anywhere;
     }
 
+    .username {
+      font-size: 24px;
+      font-weight: bold;
+      color: #f5d66e;
+      margin: 12px 0 20px;
+      overflow-wrap: anywhere;
+    }
+
+    .rules {
+      color: #777;
+      font-size: 12px;
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+
     footer {
       margin-top: 25px;
       color: #555;
       font-size: 12px;
     }
+
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 
 <body>
-
   <main class="container">
 
     <div class="logo">STABLEVEX</div>
     <div class="subtitle">Yeni nesil yapay zekâ platformu</div>
 
+    <!-- GİRİŞ EKRANI -->
     <section class="panel" id="loginPanel">
 
       <h2>Hesabına giriş yap</h2>
@@ -182,15 +204,51 @@
         Google ile devam et
       </button>
 
-      <div id="message"></div>
+      <div class="message" id="loginMessage"></div>
 
     </section>
 
-    <section class="panel" id="account">
+    <!-- KULLANICI ADI EKRANI -->
+    <section class="panel hidden" id="usernamePanel">
+
+      <h2>Kullanıcı adını belirle</h2>
+
+      <p class="description">
+        StableVex'e hoş geldin! Devam etmek için kendine
+        özel bir kullanıcı adı seç.
+      </p>
+
+      <input
+        type="text"
+        id="usernameInput"
+        placeholder="Kullanıcı adın"
+        minlength="3"
+        maxlength="20"
+        autocomplete="off"
+      >
+
+      <button class="primary" id="usernameBtn">
+        Kullanıcı adını kaydet
+      </button>
+
+      <div class="rules">
+        3-20 karakter kullanabilirsin.<br>
+        İngilizce harf, rakam ve alt çizgi (_).<br>
+        Seçtiğin isim daha sonra değiştirilemez.
+      </div>
+
+      <div class="message" id="usernameMessage"></div>
+
+    </section>
+
+    <!-- HESAP EKRANI -->
+    <section class="panel hidden" id="accountPanel">
 
       <h2>StableVex'e hoş geldin</h2>
 
       <div class="status" id="userEmail"></div>
+
+      <div class="username" id="displayUsername"></div>
 
       <p style="color:#aaa;font-size:14px;margin-bottom:15px;">
         Hesabın başarıyla bağlandı.
@@ -220,18 +278,38 @@
       SUPABASE_KEY
     );
 
-    const message = document.getElementById("message");
     const loginPanel = document.getElementById("loginPanel");
-    const accountPanel = document.getElementById("account");
+    const usernamePanel = document.getElementById("usernamePanel");
+    const accountPanel = document.getElementById("accountPanel");
 
-    function showMessage(text) {
-      message.textContent = text;
+    const loginMessage = document.getElementById("loginMessage");
+    const usernameMessage = document.getElementById("usernameMessage");
+
+    let currentSession = null;
+    let screenRequest = 0;
+
+    function showLoginMessage(text) {
+      loginMessage.textContent = text;
+    }
+
+    function showUsernameMessage(text) {
+      usernameMessage.textContent = text;
     }
 
     function setLoading(button, loading, originalText) {
       button.disabled = loading;
       button.textContent = loading ? "Bekle..." : originalText;
     }
+
+    function showPanel(panel) {
+      loginPanel.classList.add("hidden");
+      usernamePanel.classList.add("hidden");
+      accountPanel.classList.add("hidden");
+
+      panel.classList.remove("hidden");
+    }
+
+    // E-POSTA İLE GİRİŞ
 
     async function login() {
       const button = document.getElementById("loginBtn");
@@ -240,7 +318,7 @@
       const password = document.getElementById("password").value;
 
       if (!email || !password) {
-        showMessage("E-posta ve şifreni gir.");
+        showLoginMessage("E-posta ve şifreni gir.");
         return;
       }
 
@@ -253,8 +331,12 @@
 
       setLoading(button, false, "Giriş yap");
 
-      if (error) showMessage(error.message);
+      if (error) {
+        showLoginMessage(error.message);
+      }
     }
+
+    // HESAP OLUŞTURMA
 
     async function signup() {
       const button = document.getElementById("signupBtn");
@@ -263,12 +345,12 @@
       const password = document.getElementById("password").value;
 
       if (!email || !password) {
-        showMessage("E-posta ve şifreni gir.");
+        showLoginMessage("E-posta ve şifreni gir.");
         return;
       }
 
       if (password.length < 8) {
-        showMessage("Şifre en az 8 karakter olmalı.");
+        showLoginMessage("Şifre en az 8 karakter olmalı.");
         return;
       }
 
@@ -285,15 +367,21 @@
       setLoading(button, false, "Hesap oluştur");
 
       if (error) {
-        showMessage(error.message);
+        showLoginMessage(error.message);
       } else {
-        showMessage(
+        showLoginMessage(
           "Kayıt başarılı! E-posta doğrulama bağlantısını kontrol et."
         );
       }
     }
 
+    // GOOGLE İLE GİRİŞ
+
     async function googleLogin() {
+      const button = document.getElementById("googleBtn");
+
+      setLoading(button, true, "Google ile devam et");
+
       const { error } = await client.auth.signInWithOAuth({
         provider: "google",
         options: {
@@ -301,42 +389,145 @@
         }
       });
 
-      if (error) showMessage(error.message);
-    }
-
-    async function logout() {
-      const { error } = await client.auth.signOut();
-
-      if (error) showMessage(error.message);
-    }
-
-    function updateScreen(session) {
-      if (session) {
-        loginPanel.style.display = "none";
-        accountPanel.style.display = "block";
-
-        document.getElementById("userEmail").textContent =
-          session.user.email || "Google hesabı";
-      } else {
-        loginPanel.style.display = "block";
-        accountPanel.style.display = "none";
+      if (error) {
+        showLoginMessage(error.message);
+        setLoading(button, false, "Google ile devam et");
       }
     }
+
+    // KULLANICI ADI KAYDETME
+
+    async function claimUsername() {
+      const button = document.getElementById("usernameBtn");
+      const username = document.getElementById("usernameInput").value.trim();
+
+      if (!username) {
+        showUsernameMessage("Bir kullanıcı adı gir.");
+        return;
+      }
+
+      if (!/^[A-Za-z0-9_]{3,20}$/.test(username)) {
+        showUsernameMessage(
+          "3-20 karakter kullan. Yalnızca İngilizce harf, rakam ve _ kullanılabilir."
+        );
+        return;
+      }
+
+      setLoading(button, true, "Kullanıcı adını kaydet");
+      showUsernameMessage("Kullanıcı adı kontrol ediliyor...");
+
+      const { data, error } = await client.rpc("claim_username", {
+        p_username: username
+      });
+
+      setLoading(button, false, "Kullanıcı adını kaydet");
+
+      if (error) {
+        showUsernameMessage(error.message);
+        return;
+      }
+
+      if (!data || !data.success) {
+        showUsernameMessage("Kullanıcı adı kaydedilemedi.");
+        return;
+      }
+
+      showUsernameMessage("Kullanıcı adın başarıyla kaydedildi.");
+
+      await updateScreen(currentSession);
+    }
+
+    // OTURUMU KONTROL ET
+
+    async function updateScreen(session) {
+      const request = ++screenRequest;
+      currentSession = session;
+
+      if (!session) {
+        showPanel(loginPanel);
+        return;
+      }
+
+      showPanel(accountPanel);
+
+      document.getElementById("userEmail").textContent =
+        session.user.email || "Google hesabı";
+
+      document.getElementById("displayUsername").textContent =
+        "Hesap kontrol ediliyor...";
+
+      const { data, error } = await client
+        .from("profiles")
+        .select("username")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+      if (request !== screenRequest) return;
+
+      if (error) {
+        document.getElementById("displayUsername").textContent =
+          "Profil yüklenemedi";
+
+        console.error("Profil hatası:", error);
+        return;
+      }
+
+      if (!data || !data.username) {
+        document.getElementById("usernameInput").value = "";
+        showUsernameMessage("");
+        showPanel(usernamePanel);
+        return;
+      }
+
+      document.getElementById("displayUsername").textContent =
+        "@" + data.username;
+
+      showPanel(accountPanel);
+    }
+
+    // ÇIKIŞ
+
+    async function logout() {
+      const button = document.getElementById("logoutBtn");
+
+      setLoading(button, true, "Çıkış yap");
+
+      const { error } = await client.auth.signOut();
+
+      setLoading(button, false, "Çıkış yap");
+
+      if (error) {
+        alert(error.message);
+      }
+    }
+
+    // BUTONLAR
 
     document.getElementById("loginBtn").onclick = login;
     document.getElementById("signupBtn").onclick = signup;
     document.getElementById("googleBtn").onclick = googleLogin;
+    document.getElementById("usernameBtn").onclick = claimUsername;
     document.getElementById("logoutBtn").onclick = logout;
 
+    // OTURUM DEĞİŞİKLİKLERİ
+
     client.auth.onAuthStateChange((event, session) => {
-      updateScreen(session);
+      setTimeout(() => {
+        updateScreen(session);
+      }, 0);
     });
 
-    client.auth.getSession().then(({ data }) => {
+    // İLK OTURUM KONTROLÜ
+
+    client.auth.getSession().then(({ data, error }) => {
+      if (error) {
+        showLoginMessage(error.message);
+        return;
+      }
+
       updateScreen(data.session);
     });
-  </script>
 
+  </script>
 </body>
-  </html>
-  
+</html>
