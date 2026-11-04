@@ -11,102 +11,113 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
---bg:#101010;--panel:#191919;--panel2:#222;
---border:#303030;--text:#fff;--muted:#999;
---accent:#e6c65d;--accentText:#171717;
+ --bg:#101010;--panel:#191919;--panel2:#222;
+ --border:#303030;--text:#f5f5f2;--muted:#999;
+ --accent:#e6c65d;--accentText:#171717;
+ --danger:#d65b5b;--green:#69bd8a;
 }
 body.light{
---bg:#f4f4f1;--panel:#fff;--panel2:#eeeeea;
---border:#deded8;--text:#191919;--muted:#777;
---accent:#c5a63e;--accentText:#111;
+ --bg:#f4f4f1;--panel:#fff;--panel2:#eeeeea;
+ --border:#deded8;--text:#191919;--muted:#777;
+ --accent:#c5a63e;--accentText:#111;
 }
 body{
-background:var(--bg);color:var(--text);
-font-family:Arial,sans-serif;height:100dvh;overflow:hidden;
+ background:var(--bg);color:var(--text);
+ font-family:Arial,sans-serif;height:100dvh;overflow:hidden;
 }
-button,input,textarea{font:inherit}
+button,input,textarea,select{font:inherit}
 button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
 .hidden{display:none!important}
+button:focus-visible,input:focus-visible,textarea:focus-visible{
+ outline:2px solid var(--accent);outline-offset:2px
+}
+
+/* LOGO */
+.brand{display:flex;align-items:center;justify-content:center;gap:12px}
+.brand-symbol{width:48px;height:48px;flex-shrink:0}
+.brand-name{font-size:27px;font-weight:900;letter-spacing:3px;color:var(--accent)}
+.brand-small .brand-symbol{width:34px;height:34px}
+.brand-small .brand-name{font-size:19px;letter-spacing:2px}
+
+/* BUTTONS */
+.btn{
+ border:0;border-radius:10px;padding:13px 16px;
+ font-weight:bold;margin-top:8px
+}
+.primary{background:var(--accent);color:var(--accentText)}
+.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
+.danger{background:#512727;color:#fff;border:1px solid #713737}
+.full{width:100%}
+.icon-btn{
+ border:1px solid var(--border);background:var(--panel2);
+ color:var(--text);border-radius:9px;padding:9px 11px
+}
+.message{font-size:13px;color:var(--accent);margin-top:13px;line-height:1.5;overflow-wrap:anywhere}
+.muted{color:var(--muted)}
+.small{font-size:12px}
 
 /* AUTH */
 #authScreen{
-height:100%;display:flex;align-items:center;
-justify-content:center;padding:20px;overflow:auto;
+ height:100%;display:flex;align-items:center;
+ justify-content:center;padding:20px;overflow:auto
 }
-.auth-box{width:100%;max-width:420px;text-align:center}
-.logo{
-font-size:34px;font-weight:900;letter-spacing:3px;
-color:var(--accent);margin-bottom:10px
-}
-.subtitle{color:var(--muted);font-size:14px;margin-bottom:28px}
+.auth-box{width:100%;max-width:430px;text-align:center}
+.auth-brand{margin-bottom:12px}
+.auth-subtitle{color:var(--muted);font-size:13px;margin:12px 0 25px}
 .auth-panel{
-background:var(--panel);border:1px solid var(--border);
-border-radius:18px;padding:25px
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:18px;padding:24px;text-align:left
 }
-.auth-panel h2{font-size:22px;margin-bottom:20px}
-.auth-panel input{
-width:100%;padding:14px;margin-bottom:12px;
-background:var(--bg);color:var(--text);
-border:1px solid var(--border);border-radius:10px;outline:none
+.auth-panel h2{text-align:center;font-size:22px;margin-bottom:8px}
+.auth-description{text-align:center;color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:18px}
+.auth-panel input,.field{
+ width:100%;padding:14px;margin-bottom:11px;
+ background:var(--bg);color:var(--text);
+ border:1px solid var(--border);border-radius:10px;outline:none
 }
-.auth-panel input:focus{border-color:var(--accent)}
-.btn{
-border:0;border-radius:10px;padding:13px 16px;
-font-weight:bold;margin-top:8px
-}
-.primary{background:var(--accent);color:var(--accentText)}
-.secondary{
-background:var(--panel2);color:var(--text);
-border:1px solid var(--border)
-}
-.full{width:100%}
-.message{font-size:13px;color:var(--accent);margin-top:15px;line-height:1.5}
-.rules{font-size:12px;color:var(--muted);line-height:1.7;margin-top:12px}
-.auth-footer{color:var(--muted);font-size:12px;margin-top:24px}
+.auth-panel input:focus,.field:focus{border-color:var(--accent)}
+.auth-switch{text-align:center;font-size:12px;color:var(--muted);margin-top:17px}
+.link-btn{background:none;border:0;color:var(--accent);font-weight:bold;padding:4px}
+.auth-footer{color:var(--muted);font-size:11px;margin-top:22px}
+.auth-divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:11px;margin:16px 0}
+.auth-divider:before,.auth-divider:after{content:"";height:1px;background:var(--border);flex:1}
 
-/* APP */
+/* APP LAYOUT */
 #appScreen{height:100%;display:flex}
 .sidebar{
-width:285px;min-width:285px;background:var(--panel);
-border-right:1px solid var(--border);
-display:flex;flex-direction:column;padding:16px;
-z-index:5
+ width:285px;min-width:285px;background:var(--panel);
+ border-right:1px solid var(--border);
+ display:flex;flex-direction:column;padding:15px;z-index:5
 }
 .side-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.side-logo{font-size:21px;font-weight:900;letter-spacing:2px;color:var(--accent)}
-.icon-btn{
-border:1px solid var(--border);background:var(--panel2);
-color:var(--text);border-radius:9px;padding:9px 11px
-}
 .new-chat{
-width:100%;background:var(--accent);color:var(--accentText);
-border:0;border-radius:10px;padding:13px;font-weight:bold;
-margin-bottom:14px
+ width:100%;background:var(--accent);color:var(--accentText);
+ border:0;border-radius:10px;padding:13px;font-weight:bold;margin-bottom:12px
 }
 .search{
-width:100%;padding:12px;background:var(--bg);
-border:1px solid var(--border);border-radius:9px;
-color:var(--text);outline:none;margin-bottom:16px
+ width:100%;padding:12px;background:var(--bg);
+ border:1px solid var(--border);border-radius:9px;
+ color:var(--text);outline:none;margin-bottom:15px
 }
-.history-title{
-font-size:11px;color:var(--muted);font-weight:bold;
-letter-spacing:1px;margin:5px 0 10px
-}
+.history-title{font-size:10px;color:var(--muted);font-weight:bold;letter-spacing:1.3px;margin:5px 0 10px}
 .chat-list{flex:1;overflow-y:auto}
 .chat-item{
-display:flex;align-items:center;gap:8px;
-padding:11px;border-radius:9px;cursor:pointer;
-color:var(--muted);font-size:13px;margin-bottom:4px
+ display:flex;align-items:center;gap:8px;
+ padding:10px;border-radius:9px;color:var(--muted);
+ font-size:13px;margin-bottom:4px
 }
 .chat-item:hover,.chat-item.active{background:var(--panel2);color:var(--text)}
+.chat-open{display:flex;align-items:center;gap:8px;flex:1;min-width:0;background:none;border:0;color:inherit;text-align:left}
 .chat-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
-.side-bottom{border-top:1px solid var(--border);padding-top:13px}
-.profile-row{display:flex;align-items:center;gap:10px;padding:9px}
+.chat-tools{display:flex;gap:3px}
+.chat-tools button{background:none;border:0;color:var(--muted);padding:4px;font-size:13px}
+.chat-tools button:hover{color:var(--accent)}
+.side-bottom{border-top:1px solid var(--border);padding-top:12px}
+.profile-row{display:flex;align-items:center;gap:10px;padding:8px}
 .avatar{
-width:36px;height:36px;border-radius:50%;
-background:var(--accent);color:#171717;
-display:flex;align-items:center;justify-content:center;
-font-weight:bold
+ width:36px;height:36px;border-radius:50%;background:var(--accent);
+ color:#171717;display:flex;align-items:center;justify-content:center;font-weight:bold
 }
 .profile-info{min-width:0;flex:1}
 .profile-name{font-size:13px;font-weight:bold;overflow:hidden;text-overflow:ellipsis}
@@ -117,253 +128,309 @@ font-weight:bold
 /* MAIN */
 .main{flex:1;min-width:0;display:flex;flex-direction:column;position:relative}
 .topbar{
-height:62px;min-height:62px;border-bottom:1px solid var(--border);
-display:flex;align-items:center;justify-content:space-between;
-padding:0 22px
+ height:62px;min-height:62px;border-bottom:1px solid var(--border);
+ display:flex;align-items:center;justify-content:space-between;padding:0 22px
 }
-.top-title{font-size:15px;font-weight:bold}
-.top-right{display:flex;align-items:center;gap:9px}
+.top-left{display:flex;align-items:center;gap:10px;min-width:0}
+.top-title{font-size:15px;font-weight:bold;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top-right{display:flex;align-items:center;gap:8px}
 .mobile-menu{display:none}
-.chat-area{
-flex:1;overflow-y:auto;padding:30px 18px 20px;
-}
-.content{max-width:820px;margin:0 auto;width:100%}
-.welcome{text-align:center;padding:10vh 10px 35px}
-.welcome h1{font-size:32px;margin-bottom:12px}
+.chat-area{flex:1;overflow-y:auto;padding:28px 18px 20px}
+.content{max-width:850px;margin:0 auto;width:100%}
+.welcome{text-align:center;padding:8vh 10px 35px}
+.welcome-mark{margin:0 auto 18px;width:76px;height:76px}
+.welcome h1{font-size:31px;margin-bottom:12px;line-height:1.25}
 .welcome h1 span{color:var(--accent)}
-.welcome p{color:var(--muted);font-size:14px;line-height:1.6}
-.suggestions{
-display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:30px
-}
+.welcome p{color:var(--muted);font-size:14px;line-height:1.7}
+.suggestions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:30px}
 .suggestion{
-text-align:left;padding:15px;background:var(--panel);
-border:1px solid var(--border);border-radius:12px;
-color:var(--text);font-size:13px;line-height:1.5
+ text-align:left;padding:16px;background:var(--panel);
+ border:1px solid var(--border);border-radius:12px;
+ color:var(--text);font-size:13px;line-height:1.5
 }
-.suggestion:hover{border-color:var(--accent)}
-.suggestion strong{display:block;margin-bottom:5px}
-.messages{display:flex;flex-direction:column;gap:22px}
+.suggestion:hover{border-color:var(--accent);transform:translateY(-1px)}
+.suggestion strong{display:block;margin-bottom:6px;color:var(--accent);font-size:14px}
+.messages{display:flex;flex-direction:column;gap:24px;padding-bottom:18px}
 .msg{display:flex;gap:12px;align-items:flex-start}
 .msg-avatar{
-width:32px;height:32px;min-width:32px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-background:var(--panel2);font-size:12px;font-weight:bold
+ width:32px;height:32px;min-width:32px;border-radius:50%;
+ display:flex;align-items:center;justify-content:center;
+ background:var(--panel2);font-size:11px;font-weight:bold
 }
 .msg.user .msg-avatar{background:var(--accent);color:#171717}
 .msg-content{flex:1;min-width:0;padding-top:5px}
 .msg-role{font-size:12px;font-weight:bold;margin-bottom:8px}
 .msg-text{font-size:14px;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere}
-.pending-note{
-margin-top:10px;color:var(--muted);font-size:12px;
-padding:10px 12px;border-left:2px solid var(--accent);
-background:var(--panel);border-radius:0 8px 8px 0
+.msg-actions{display:flex;gap:7px;margin-top:9px}
+.msg-actions button{
+ border:1px solid var(--border);background:var(--panel);
+ color:var(--muted);border-radius:7px;padding:5px 8px;font-size:11px
 }
+.msg-actions button:hover{color:var(--accent);border-color:var(--accent)}
+.loading-dots{color:var(--accent);letter-spacing:3px;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.35}}
 
 /* COMPOSER */
 .composer-wrap{padding:12px 18px 15px}
-.composer{max-width:820px;margin:auto}
+.composer{max-width:850px;margin:auto}
 .input-box{
-display:flex;align-items:flex-end;gap:10px;
-padding:10px;background:var(--panel);
-border:1px solid var(--border);border-radius:16px
+ display:flex;align-items:flex-end;gap:10px;padding:10px;
+ background:var(--panel);border:1px solid var(--border);border-radius:16px
 }
 #messageInput{
-flex:1;min-width:0;resize:none;max-height:160px;
-min-height:42px;padding:11px 8px;
-background:transparent;border:0;outline:none;
-color:var(--text);font-size:14px;line-height:1.5
+ flex:1;min-width:0;resize:none;max-height:170px;min-height:42px;
+ padding:11px 8px;background:transparent;border:0;outline:none;
+ color:var(--text);font-size:14px;line-height:1.5
 }
 #sendBtn{
-width:42px;height:42px;border:0;border-radius:11px;
-background:var(--accent);color:var(--accentText);
-font-size:20px;font-weight:bold
+ width:42px;height:42px;border:0;border-radius:11px;
+ background:var(--accent);color:var(--accentText);font-size:21px;font-weight:bold
 }
 #sendBtn:disabled{opacity:.4}
-.composer-note{
-text-align:center;color:var(--muted);font-size:11px;margin-top:10px
-}
+.composer-note{text-align:center;color:var(--muted);font-size:10px;margin-top:9px}
 
-/* SETTINGS */
+/* PANELS / MODALS */
 .modal{
-position:fixed;inset:0;background:#0009;z-index:20;
-display:flex;align-items:center;justify-content:center;padding:18px
+ position:fixed;inset:0;background:#000b;z-index:20;
+ display:flex;align-items:center;justify-content:center;padding:18px
 }
 .modal-box{
-width:100%;max-width:400px;background:var(--panel);
-border:1px solid var(--border);border-radius:16px;padding:22px
+ width:100%;max-width:440px;max-height:90dvh;overflow:auto;
+ background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px
 }
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .setting-row{
-display:flex;align-items:center;justify-content:space-between;
-padding:14px 0;border-bottom:1px solid var(--border);font-size:14px
+ display:flex;align-items:center;justify-content:space-between;
+ gap:12px;padding:14px 0;border-bottom:1px solid var(--border);font-size:13px
 }
 .setting-row button{margin:0}
-
-/* MOBILE */
-@media(max-width:700px){
-.sidebar{
-position:fixed;top:0;bottom:0;left:0;
-transform:translateX(-105%);transition:transform .22s;
-width:285px;box-shadow:10px 0 35px #0005
+.setting-value{color:var(--muted);font-size:12px;text-align:right;overflow-wrap:anywhere}
+.modal-note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:14px}
+#projectView{flex:1;overflow:auto;padding:25px}
+.project-card{
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:14px;padding:18px;margin:12px 0
 }
-.sidebar.open{transform:translateX(0)}
-.mobile-menu{display:block}
-.topbar{padding:0 13px}
-.top-left{display:flex;align-items:center;gap:10px}
-.chat-area{padding:18px 13px}
-.welcome{padding-top:9vh}
-.welcome h1{font-size:26px}
-.suggestions{grid-template-columns:1fr}
-.composer-wrap{padding:10px}
+.project-card h3{margin-bottom:8px}
+.coming{font-size:11px;color:var(--accent);margin-top:10px}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+ .sidebar{
+  position:fixed;top:0;bottom:0;left:0;transform:translateX(-105%);
+  transition:transform .22s;width:285px;box-shadow:10px 0 35px #0005
+ }
+ .sidebar.open{transform:translateX(0)}
+ .mobile-menu{display:block}
+ .topbar{padding:0 12px}
+ .chat-area{padding:17px 12px}
+ .welcome{padding-top:7vh}
+ .welcome h1{font-size:25px}
+ .suggestions{grid-template-columns:1fr}
+ .composer-wrap{padding:9px}
 }
 </style>
 </head>
 
 <body>
 
+<!-- SVG LOGO: STABLEVEX'E ÖZEL -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="stableMark" viewBox="0 0 100 100">
+ <path d="M50 4 88 19v29c0 23-15 39-38 48C27 87 12 71 12 48V19L50 4Z"
+       fill="none" stroke="#e6c65d" stroke-width="5"/>
+ <path d="M50 17 76 27v21c0 16-10 28-26 36C34 76 24 64 24 48V27l26-10Z"
+       fill="#24211a" stroke="#a98b38" stroke-width="2"/>
+ <path d="m34 50 11 11 23-25" fill="none" stroke="#f4d978"
+       stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+</svg>
+
 <!-- GİRİŞ -->
 <section id="authScreen">
-<div class="auth-box">
-<div class="logo">STABLEVEX</div>
-<div class="subtitle">Yeni nesil yapay zekâ platformu</div>
+ <div class="auth-box">
+  <div class="brand auth-brand">
+   <svg class="brand-symbol"><use href="#stableMark"/></svg>
+   <div class="brand-name">STABLEVEX</div>
+  </div>
+  <div class="auth-subtitle">Fikirlerini gerçeğe dönüştür.</div>
 
-<div class="auth-panel" id="loginPanel">
-<h2>Hesabına giriş yap</h2>
-<input id="email" type="email" placeholder="E-posta adresin" autocomplete="email">
-<input id="password" type="password" placeholder="Şifren" autocomplete="current-password">
-<button class="btn primary full" id="loginBtn">Giriş yap</button>
-<button class="btn secondary full" id="signupBtn">Hesap oluştur</button>
-<div style="color:var(--muted);margin:18px 0;font-size:12px">VEYA</div>
-<button class="btn secondary full" id="googleBtn">Google ile devam et</button>
-<div class="message" id="loginMessage"></div>
-</div>
+  <div class="auth-panel" id="loginPanel">
+   <h2>Tekrar hoş geldin</h2>
+   <p class="auth-description">Hesabına giriş yap ve kaldığın yerden devam et.</p>
+   <input id="email" type="email" placeholder="E-posta adresi" autocomplete="email">
+   <input id="password" type="password" placeholder="Şifre" autocomplete="current-password">
+   <button class="btn primary full" id="loginBtn">Giriş yap</button>
+   <div class="auth-divider">VEYA</div>
+   <button class="btn secondary full" id="googleLoginBtn">Google ile giriş yap</button>
+   <div class="auth-switch">İlk kez mi geliyorsun?
+    <button class="link-btn" id="showSignupBtn">Hesap oluştur</button>
+   </div>
+   <div class="message" id="loginMessage" role="status"></div>
+  </div>
 
-<div class="auth-panel hidden" id="usernamePanel">
-<h2>Kullanıcı adını belirle</h2>
-<p style="color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:18px">
-StableVex'e hoş geldin! Kendine özel bir kullanıcı adı seç.
-</p>
-<input id="usernameInput" placeholder="Kullanıcı adın" maxlength="20" autocomplete="off">
-<button class="btn primary full" id="usernameBtn">Kullanıcı adını kaydet</button>
-<div class="rules">
-3-20 karakter. İngilizce harf, rakam ve alt çizgi (_).<br>
-Seçtiğin isim daha sonra değiştirilemez.
-</div>
-<div class="message" id="usernameMessage"></div>
-</div>
+  <div class="auth-panel hidden" id="signupPanel">
+   <h2>Yeni hesap oluştur</h2>
+   <p class="auth-description">StableVex yolculuğuna başlamak için bilgilerini gir.</p>
+   <input id="signupEmail" type="email" placeholder="E-posta adresi" autocomplete="email">
+   <input id="signupPassword" type="password" placeholder="Şifre (en az 8 karakter)" autocomplete="new-password">
+   <button class="btn primary full" id="signupBtn">E-posta ile kayıt ol</button>
+   <div class="auth-divider">VEYA</div>
+   <button class="btn secondary full" id="googleSignupBtn">Google ile kayıt ol</button>
+   <div class="auth-switch">Zaten hesabın var mı?
+    <button class="link-btn" id="showLoginBtn">Giriş yap</button>
+   </div>
+   <div class="message" id="signupMessage" role="status"></div>
+  </div>
 
-<div class="auth-footer">STABLEVEX © 2026</div>
-</div>
+  <div class="auth-panel hidden" id="usernamePanel">
+   <h2>Kullanıcı adını seç</h2>
+   <p class="auth-description">Bu isim hesabına özel olacak ve daha sonra değiştirilemeyecek.</p>
+   <input id="usernameInput" placeholder="Kullanıcı adı" maxlength="20" autocomplete="off">
+   <button class="btn primary full" id="usernameBtn">Kullanıcı adını kaydet</button>
+   <div class="modal-note">3-20 karakter. İngilizce harf, rakam ve alt çizgi (_) kullanabilirsin.</div>
+   <div class="message" id="usernameMessage" role="status"></div>
+  </div>
+
+  <div class="auth-footer">STABLEVEX © 2026</div>
+ </div>
 </section>
 
 <!-- UYGULAMA -->
 <section id="appScreen" class="hidden">
+ <aside class="sidebar" id="sidebar">
+  <div class="side-top">
+   <div class="brand brand-small">
+    <svg class="brand-symbol"><use href="#stableMark"/></svg>
+    <div class="brand-name">STABLEVEX</div>
+   </div>
+   <button class="icon-btn" id="closeSidebar">✕</button>
+  </div>
 
-<aside class="sidebar" id="sidebar">
-<div class="side-top">
-<div class="side-logo">STABLEVEX</div>
-<button class="icon-btn" id="closeSidebar">✕</button>
-</div>
+  <button class="new-chat" id="newChatBtn">＋ Yeni sohbet</button>
+  <input class="search" id="chatSearch" placeholder="Sohbetlerde ara...">
+  <div class="history-title">SOHBETLERİN</div>
+  <div class="chat-list" id="chatList"></div>
 
-<button class="new-chat" id="newChatBtn">＋ Yeni sohbet</button>
-<input class="search" id="chatSearch" placeholder="Sohbetlerde ara...">
+  <div class="side-bottom">
+   <div class="profile-row">
+    <div class="avatar" id="avatarLetter">S</div>
+    <div class="profile-info">
+     <div class="profile-name" id="profileUsername">Kullanıcı</div>
+     <div class="profile-email" id="profileEmail"></div>
+    </div>
+   </div>
+   <div class="side-actions">
+    <button class="icon-btn" id="settingsBtn">⚙ Ayarlar</button>
+    <button class="icon-btn" id="logoutBtn">Çıkış</button>
+   </div>
+  </div>
+ </aside>
 
-<div class="history-title">SOHBET GEÇMİŞİ</div>
-<div class="chat-list" id="chatList"></div>
+ <main class="main">
+  <header class="topbar">
+   <div class="top-left">
+    <button class="icon-btn mobile-menu" id="openSidebar">☰</button>
+    <div class="top-title" id="topTitle">Yeni sohbet</div>
+   </div>
+   <div class="top-right">
+    <button class="icon-btn hidden" id="projectsBtn">Projeler</button>
+    <button class="icon-btn" id="themeBtn" title="Tema değiştir">☼</button>
+   </div>
+  </header>
 
-<div class="side-bottom">
-<div class="profile-row">
-<div class="avatar" id="avatarLetter">S</div>
-<div class="profile-info">
-<div class="profile-name" id="profileUsername">Kullanıcı</div>
-<div class="profile-email" id="profileEmail"></div>
-</div>
-</div>
-<div class="side-actions">
-<button class="icon-btn" id="settingsBtn">⚙ Ayarlar</button>
-<button class="icon-btn" id="logoutBtn">Çıkış</button>
-</div>
-</div>
-</aside>
+  <div class="chat-area" id="chatArea">
+   <div class="content">
+    <div class="welcome" id="welcome">
+     <svg class="welcome-mark"><use href="#stableMark"/></svg>
+     <h1>Yeni macerana<br><span id="welcomeUsername">hoş geldin</span></h1>
+     <p id="welcomeSubtitle">Bugün hangi fikri hayata geçiriyoruz?</p>
 
-<main class="main">
-<header class="topbar">
-<div class="top-left">
-<button class="icon-btn mobile-menu" id="openSidebar">☰</button>
-<div class="top-title" id="topTitle">Yeni sohbet</div>
-</div>
-<div class="top-right">
-<button class="icon-btn" id="themeBtn" title="Tema değiştir">☼</button>
-</div>
-</header>
+     <div class="suggestions">
+      <button class="suggestion" data-prompt="Bana geliştirebileceğim özgün bir proje fikri öner.">
+       <strong>✦ Proje fikirleri</strong>
+       Yeni bir şey tasarlamak için fikir bul.
+      </button>
+      <button class="suggestion" data-prompt="Bu konuyu örneklerle, adım adım açıkla: ">
+       <strong>▤ Öğrenme</strong>
+       Yeni konuları anlaşılır şekilde öğren.
+      </button>
+      <button class="suggestion" data-prompt="Şu kodu incele, hatalarını bul ve düzeltilmiş halini ver: ">
+       <strong>⌘ Kodlama</strong>
+       Kodlarını incele ve sorunları çöz.
+      </button>
+      <button class="suggestion" data-prompt="Şu konuda araştırma yap ve güncel bilgileri özetle: ">
+       <strong>⌕ Araştırma</strong>
+       Merak ettiğin konuları araştır.
+      </button>
+     </div>
+    </div>
+    <div class="messages" id="messages"></div>
+   </div>
+  </div>
 
-<div class="chat-area" id="chatArea">
-<div class="content">
-<div class="welcome" id="welcome">
-<h1>Merhaba, <span id="welcomeUsername">Kullanıcı</span></h1>
-<p>Bugün ne üzerinde çalışmak istersin?</p>
+  <div id="projectView" class="hidden">
+   <h2>Proje alanı</h2>
+   <p class="modal-note">Projelerini burada oluşturup yönetebileceğin alan.</p>
+   <div class="project-card">
+    <h3>Yeni proje</h3>
+    <p class="muted small">Web sitesi, oyun, web uygulaması veya yapay zekâ projesi.</p>
+    <button class="btn secondary" disabled>Proje oluştur</button>
+    <div class="coming">Proje oluşturma ve çalıştırma altyapısı henüz bağlanmadı.</div>
+   </div>
+   <div class="project-card">
+    <h3>Proje dosyaları</h3>
+    <p class="muted small">Dosya düzenleyici, canlı önizleme, sürüm geçmişi ve yedekleme.</p>
+    <div class="coming">Bu bölüm sunucu ve dosya depolama altyapısı tamamlanınca açılacak.</div>
+   </div>
+   <button class="btn secondary" id="backToChatBtn">Sohbete dön</button>
+  </div>
 
-<div class="suggestions">
-<button class="suggestion" data-prompt="Bana yeni bir proje fikri öner.">
-<strong>✦ Proje fikirleri</strong>
-Yeni bir projeye başlamak için fikir üret.
-</button>
-<button class="suggestion" data-prompt="Bu konuyu adım adım açıkla: ">
-<strong>▤ Öğrenme</strong>
-Karmaşık konuları adım adım öğren.
-</button>
-<button class="suggestion" data-prompt="Şu kodu incele ve hatalarını bul: ">
-<strong>⌘ Kodlama</strong>
-Kodlarını incele ve sorunları bul.
-</button>
-<button class="suggestion" data-prompt="Şu konuda araştırma yap: ">
-<strong>⌕ Araştırma</strong>
-Merak ettiğin konuları keşfet.
-</button>
-</div>
-</div>
-<div class="messages" id="messages"></div>
-</div>
-</div>
-
-<div class="composer-wrap">
-<div class="composer">
-<div class="input-box">
-<textarea id="messageInput" rows="1" placeholder="StableVex'e mesaj gönder..."></textarea>
-<button id="sendBtn" title="Gönder">↑</button>
-</div>
-<div class="composer-note" id="composerNote">
-Mesajların hesabına kaydedilir. Yapay zekâ bağlantısı sonraki aşamada eklenecek.
-</div>
-</div>
-</div>
-</main>
+  <div class="composer-wrap" id="composerWrap">
+   <div class="composer">
+    <div class="input-box">
+     <textarea id="messageInput" rows="1" placeholder="Ne yapmak istiyorsun?"></textarea>
+     <button id="sendBtn" title="Gönder">↑</button>
+    </div>
+    <div class="composer-note" id="composerNote">Yanıtlar kullanılan ücretsiz modelin sınırlarına bağlıdır.</div>
+   </div>
+  </div>
+ </main>
 </section>
 
 <!-- AYARLAR -->
 <div class="modal hidden" id="settingsModal">
-<div class="modal-box">
-<div class="modal-head">
-<h3>Ayarlar</h3>
-<button class="icon-btn" id="closeSettings">✕</button>
-</div>
-<div class="setting-row">
-<span>Görünüm</span>
-<button class="icon-btn" id="modalThemeBtn">Tema değiştir</button>
-</div>
-<div class="setting-row">
-<span>Hesap</span>
-<span id="settingsUsername" style="color:var(--muted)"></span>
-</div>
-<div class="setting-row">
-<span>E-posta</span>
-<span id="settingsEmail" style="color:var(--muted);font-size:12px"></span>
-</div>
-</div>
+ <div class="modal-box">
+  <div class="modal-head">
+   <h3>Ayarlar</h3>
+   <button class="icon-btn" id="closeSettings">✕</button>
+  </div>
+  <div class="setting-row">
+   <span>Görünüm</span>
+   <button class="icon-btn" id="modalThemeBtn">Tema değiştir</button>
+  </div>
+  <div class="setting-row">
+   <span>Kullanıcı adı</span>
+   <span class="setting-value" id="settingsUsername"></span>
+  </div>
+  <div class="setting-row">
+   <span>E-posta</span>
+   <span class="setting-value" id="settingsEmail"></span>
+  </div>
+  <div class="setting-row">
+   <span>Günlük mesaj hakkı</span>
+   <span class="setting-value" id="usageText">Sunucu yanıtından sonra gösterilir</span>
+  </div>
+  <div class="setting-row">
+   <span>Hesap</span>
+   <button class="icon-btn danger" id="settingsLogoutBtn">Çıkış yap</button>
+  </div>
+  <p class="modal-note">Hesap bilgilerin Supabase üzerinde saklanır. Tema tercihin bu cihazda tutulur.</p>
+ </div>
 </div>
 
 <script>
-/* SUPABASE */
+/* SUPABASE BAĞLANTISI */
 const SUPABASE_URL="https://ufrddyvqhfpwkvnhybdu.supabase.co";
 const SUPABASE_KEY="sb_publishable_F5TX4lbb0T7_hSrEDCiSiw_44AT0M6z";
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
@@ -377,363 +444,715 @@ let chats=[];
 let messages=[];
 let busy=false;
 let screenRequest=0;
+let isOwner=false;
+let selectedProfile="haiku";
+let showingProjects=false;
 
-/* EKRANLAR */
+const greetingPool=[
+ "Bugün hangi fikri hayata geçiriyoruz?",
+ "Aklındaki fikri birlikte geliştirelim.",
+ "Yeni bir şeyler üretmeye hazır mısın?",
+ "Bugün ne üzerinde çalışmak istersin?",
+ "Bir fikrin varsa başlayabiliriz."
+];
+
+function randomItem(items){
+ return items[Math.floor(Math.random()*items.length)];
+}
+
+function setMessage(id,text){
+ $(id).textContent=text||"";
+}
+
+function setButton(id,loading,normalText){
+ const button=$(id);
+ button.disabled=loading;
+ button.textContent=loading?"Bekle...":normalText;
+}
+
 function showAuthPanel(panel){
-["loginPanel","usernamePanel"].forEach(id=>$(id).classList.add("hidden"));
-$(panel).classList.remove("hidden");
+ ["loginPanel","signupPanel","usernamePanel"].forEach(id=>$(id).classList.add("hidden"));
+ $(panel).classList.remove("hidden");
 }
 
 function showApp(){
-$("authScreen").classList.add("hidden");
-$("appScreen").classList.remove("hidden");
+ $("authScreen").classList.add("hidden");
+ $("appScreen").classList.remove("hidden");
 }
 
 function showAuth(){
-$("appScreen").classList.add("hidden");
-$("authScreen").classList.remove("hidden");
-showAuthPanel("loginPanel");
+ $("appScreen").classList.add("hidden");
+ $("authScreen").classList.remove("hidden");
+ showAuthPanel("loginPanel");
 }
 
-function setButton(id,loading,text){
-$(id).disabled=loading;
-$(id).textContent=loading?"Bekle...":text;
+function showMessageError(error){
+ if(!error)return "Bilinmeyen bir hata oluştu.";
+ return error.message||String(error);
 }
 
-/* GİRİŞ */
+/* E-POSTA İLE GİRİŞ */
 async function login(){
-const email=$("email").value.trim();
-const password=$("password").value;
-if(!email||!password){$("loginMessage").textContent="E-posta ve şifreni gir.";return}
+ const email=$("email").value.trim();
+ const password=$("password").value;
+ setMessage("loginMessage","");
 
-setButton("loginBtn",true,"Giriş yap");
-const {error}=await client.auth.signInWithPassword({email,password});
-setButton("loginBtn",false,"Giriş yap");
-if(error)$("loginMessage").textContent=error.message;
+ if(!email||!password){
+  setMessage("loginMessage","E-posta ve şifreni gir.");
+  return;
+ }
+
+ setButton("loginBtn",true,"Giriş yap");
+ const {error}=await client.auth.signInWithPassword({email,password});
+ setButton("loginBtn",false,"Giriş yap");
+
+ if(error)setMessage("loginMessage",showMessageError(error));
 }
 
+/* E-POSTA İLE KAYIT */
 async function signup(){
-const email=$("email").value.trim();
-const password=$("password").value;
-if(!email||!password){$("loginMessage").textContent="E-posta ve şifreni gir.";return}
-if(password.length<8){$("loginMessage").textContent="Şifre en az 8 karakter olmalı.";return}
+ const email=$("signupEmail").value.trim();
+ const password=$("signupPassword").value;
+ setMessage("signupMessage","");
 
-setButton("signupBtn",true,"Hesap oluştur");
-const {error}=await client.auth.signUp({
-email,password,
-options:{emailRedirectTo:window.location.origin}
-});
-setButton("signupBtn",false,"Hesap oluştur");
+ if(!email||!password){
+  setMessage("signupMessage","E-posta ve şifreni gir.");
+  return;
+ }
+ if(password.length<8){
+  setMessage("signupMessage","Şifre en az 8 karakter olmalı.");
+  return;
+ }
 
-$("loginMessage").textContent=error?error.message:
-"Kayıt başarılı! E-posta doğrulama bağlantısını kontrol et.";
+ setButton("signupBtn",true,"E-posta ile kayıt ol");
+ const {data,error}=await client.auth.signUp({
+  email,password,
+  options:{emailRedirectTo:window.location.origin}
+ });
+ setButton("signupBtn",false,"E-posta ile kayıt ol");
+
+ if(error){
+  setMessage("signupMessage",showMessageError(error));
+  return;
+ }
+
+ if(data.session){
+  setMessage("signupMessage","Kayıt tamamlandı. Kullanıcı adını belirleyebilirsin.");
+ }else{
+  setMessage("signupMessage","Kayıt isteği alındı. E-postana gelen doğrulama bağlantısını aç.");
+ }
 }
 
-async function googleLogin(){
-setButton("googleBtn",true,"Google ile devam et");
-const {error}=await client.auth.signInWithOAuth({
-provider:"google",
-options:{redirectTo:window.location.origin}
-});
-if(error){
-$("loginMessage").textContent=error.message;
-setButton("googleBtn",false,"Google ile devam et");
+/* GOOGLE GİRİŞ / KAYIT
+   OAuth sağlayıcısı yeni kullanıcıyı otomatik oluşturabilir.
+   Giriş seçeneğinde yeni hesap açıldığını anlarsak oturumu kapatırız. */
+async function googleAuth(mode){
+ const key="stablevex_google_intent";
+ sessionStorage.setItem(key,JSON.stringify({
+  mode,
+  startedAt:Date.now()
+ }));
+
+ const buttonId=mode==="login"?"googleLoginBtn":"googleSignupBtn";
+ setButton(buttonId,true,mode==="login"?"Google ile giriş yap":"Google ile kayıt ol");
+
+ const {error}=await client.auth.signInWithOAuth({
+  provider:"google",
+  options:{redirectTo:window.location.origin}
+ });
+
+ if(error){
+  sessionStorage.removeItem(key);
+  setButton(buttonId,false,mode==="login"?"Google ile giriş yap":"Google ile kayıt ol");
+  setMessage(mode==="login"?"loginMessage":"signupMessage",showMessageError(error));
+ }
 }
+
+async function checkGoogleIntent(session){
+ const raw=sessionStorage.getItem("stablevex_google_intent");
+ if(!raw||!session)return true;
+
+ sessionStorage.removeItem("stablevex_google_intent");
+
+ let intent;
+ try{intent=JSON.parse(raw)}catch{return true}
+
+ const createdAt=new Date(session.user.created_at||0).getTime();
+ const isNewAccount=createdAt>=intent.startedAt-15000;
+
+ if(intent.mode==="login"&&isNewAccount){
+  await client.auth.signOut();
+  showAuth();
+  setMessage("loginMessage","Bu Google hesabıyla henüz kayıt oluşturulmamış. Önce Google ile kayıt ol.");
+  return false;
+ }
+
+ if(intent.mode==="signup"&&!isNewAccount){
+  setMessage("loginMessage","Bu Google hesabı zaten kayıtlı. Giriş yapıldı.");
+ }
+
+ return true;
 }
 
 /* KULLANICI ADI */
 async function claimUsername(){
-const username=$("usernameInput").value.trim();
+ const username=$("usernameInput").value.trim();
 
-if(!/^[A-Za-z0-9_]{3,20}$/.test(username)){
-$("usernameMessage").textContent="3-20 karakter kullan. İngilizce harf, rakam ve _ kabul edilir.";
-return;
+ if(!/^[A-Za-z0-9_]{3,20}$/.test(username)){
+  setMessage("usernameMessage","3-20 karakter kullan. İngilizce harf, rakam ve _ kabul edilir.");
+  return;
+ }
+
+ setButton("usernameBtn",true,"Kullanıcı adını kaydet");
+ setMessage("usernameMessage","Kullanıcı adı kontrol ediliyor...");
+
+ const {data,error}=await client.rpc("claim_username",{p_username:username});
+ setButton("usernameBtn",false,"Kullanıcı adını kaydet");
+
+ if(error){
+  setMessage("usernameMessage",showMessageError(error));
+  return;
+ }
+ if(!data||!data.success){
+  setMessage("usernameMessage","Bu kullanıcı adı alınmış olabilir. Başka bir isim dene.");
+  return;
+ }
+
+ await updateScreen(currentSession);
 }
 
-setButton("usernameBtn",true,"Kullanıcı adını kaydet");
-$("usernameMessage").textContent="Kontrol ediliyor...";
-
-const {data,error}=await client.rpc("claim_username",{p_username:username});
-setButton("usernameBtn",false,"Kullanıcı adını kaydet");
-
-if(error){$("usernameMessage").textContent=error.message;return}
-if(!data||!data.success){$("usernameMessage").textContent="Kullanıcı adı kaydedilemedi.";return}
-
-await updateScreen(currentSession);
-}
-
-/* OTURUM */
+/* OTURUM VE PROFİL */
 async function updateScreen(session){
-const request=++screenRequest;
-currentSession=session;
+ const request=++screenRequest;
+ currentSession=session;
 
-if(!session){
-currentUsername="";
-showAuth();
-return;
-}
+ if(!session){
+  currentUsername="";
+  currentChatId=null;
+  chats=[];
+  messages=[];
+  isOwner=false;
+  showAuth();
+  return;
+ }
 
-$("userEmail");
-const {data,error}=await client.from("profiles")
-.select("username").eq("id",session.user.id).maybeSingle();
+ const googleOk=await checkGoogleIntent(session);
+ if(!googleOk)return;
 
-if(request!==screenRequest)return;
+ const {data,error}=await client.from("profiles")
+  .select("username")
+  .eq("id",session.user.id)
+  .maybeSingle();
 
-if(error){
-showAuth();
-$("loginMessage").textContent="Profil yüklenemedi: "+error.message;
-return;
-}
+ if(request!==screenRequest)return;
 
-if(!data||!data.username){
-showAuthPanel("usernamePanel");
-return;
-}
+ if(error){
+  showAuth();
+  setMessage("loginMessage","Profil yüklenemedi: "+error.message);
+  return;
+ }
 
-currentUsername=data.username;
-showApp();
-$("profileUsername").textContent="@"+currentUsername;
-$("profileEmail").textContent=session.user.email||"";
-$("avatarLetter").textContent=currentUsername.charAt(0).toUpperCase();
-$("welcomeUsername").textContent=currentUsername;
-$("settingsUsername").textContent="@"+currentUsername;
-$("settingsEmail").textContent=session.user.email||"";
+ if(!data||!data.username){
+  showAuthPanel("usernamePanel");
+  return;
+ }
 
-await loadChats();
+ currentUsername=data.username;
+ showApp();
+
+ $("profileUsername").textContent="@"+currentUsername;
+ $("profileEmail").textContent=session.user.email||"";
+ $("avatarLetter").textContent=currentUsername.charAt(0).toUpperCase();
+ $("welcomeUsername").textContent=currentUsername;
+ $("settingsUsername").textContent="@"+currentUsername;
+ $("settingsEmail").textContent=session.user.email||"";
+ $("welcomeSubtitle").textContent=randomItem(greetingPool);
+
+ await loadChats();
 }
 
 /* SOHBETLER */
 async function loadChats(){
-const {data,error}=await client.from("chats")
-.select("id,user_id,title,created_at,updated_at")
-.eq("user_id",currentSession.user.id)
-.order("updated_at",{ascending:false});
+ if(!currentSession)return;
 
-if(error){
-console.error("Sohbet listesi:",error);
-$("chatList").innerHTML='<div style="color:var(--muted);font-size:12px;padding:10px">Sohbetler yüklenemedi.</div>';
-return;
-}
+ const {data,error}=await client.from("chats")
+  .select("id,user_id,title,created_at,updated_at")
+  .eq("user_id",currentSession.user.id)
+  .order("updated_at",{ascending:false});
 
-chats=data||[];
-renderChats();
+ if(error){
+  console.error("Sohbet listesi:",error);
+  $("chatList").textContent="Sohbetler yüklenemedi.";
+  return;
+ }
+
+ chats=data||[];
+ renderChats();
 }
 
 function renderChats(){
-const search=$("chatSearch").value.trim().toLowerCase();
-$("chatList").innerHTML="";
+ const search=$("chatSearch").value.trim().toLowerCase();
+ const list=$("chatList");
+ list.innerHTML="";
 
-const filtered=chats.filter(chat=>(chat.title||"Yeni sohbet").toLowerCase().includes(search));
+ const filtered=chats.filter(chat=>
+  (chat.title||"Yeni sohbet").toLowerCase().includes(search)
+ );
 
-if(!filtered.length){
-$("chatList").innerHTML='<div style="padding:10px;color:var(--muted);font-size:12px">Sohbet bulunamadı.</div>';
-return;
-}
+ if(!filtered.length){
+  const empty=document.createElement("div");
+  empty.style.cssText="padding:10px;color:var(--muted);font-size:12px";
+  empty.textContent=search?"Eşleşen sohbet yok.":"Henüz sohbetin yok.";
+  list.appendChild(empty);
+  return;
+ }
 
-filtered.forEach(chat=>{
-const item=document.createElement("div");
-item.className="chat-item"+(chat.id===currentChatId?" active":"");
+ filtered.forEach(chat=>{
+  const item=document.createElement("div");
+  item.className="chat-item"+(chat.id===currentChatId?" active":"");
 
-const name=document.createElement("span");
-name.className="chat-name";
-name.textContent=chat.title||"Yeni sohbet";
+  const open=document.createElement("button");
+  open.className="chat-open";
+  open.type="button";
+  open.onclick=()=>openChat(chat.id);
 
-item.appendChild(document.createTextNode("▤ "));
-item.appendChild(name);
-item.onclick=()=>openChat(chat.id);
-$("chatList").appendChild(item);
-});
+  const name=document.createElement("span");
+  name.className="chat-name";
+  name.textContent=chat.title||"Yeni sohbet";
+
+  open.append("▤",name);
+
+  const tools=document.createElement("div");
+  tools.className="chat-tools";
+
+  const rename=document.createElement("button");
+  rename.type="button";
+  rename.title="Sohbeti yeniden adlandır";
+  rename.textContent="✎";
+  rename.onclick=event=>{
+   event.stopPropagation();
+   renameChat(chat.id);
+  };
+
+  const remove=document.createElement("button");
+  remove.type="button";
+  remove.title="Sohbeti sil";
+  remove.textContent="✕";
+  remove.onclick=event=>{
+   event.stopPropagation();
+   deleteChat(chat.id);
+  };
+
+  tools.append(rename,remove);
+  item.append(open,tools);
+  list.appendChild(item);
+ });
 }
 
 async function createChat(){
-if(!currentSession)return null;
+ if(!currentSession)return null;
 
-const {data,error}=await client.from("chats").insert({
-user_id:currentSession.user.id,
-title:"Yeni sohbet"
-}).select("id,user_id,title,created_at,updated_at").single();
+ const {data,error}=await client.from("chats").insert({
+  user_id:currentSession.user.id,
+  title:"Yeni sohbet"
+ }).select("id,user_id,title,created_at,updated_at").single();
 
-if(error){
-alert("Sohbet oluşturulamadı: "+error.message);
-return null;
-}
+ if(error){
+  alert("Sohbet oluşturulamadı: "+error.message);
+  return null;
+ }
 
-currentChatId=data.id;
-chats.unshift(data);
-renderChats();
-$("topTitle").textContent=data.title;
-$("welcome").classList.add("hidden");
-$("messages").innerHTML="";
-messages=[];
-return data.id;
+ currentChatId=data.id;
+ chats.unshift(data);
+ renderChats();
+ $("topTitle").textContent=data.title;
+ $("welcome").classList.add("hidden");
+ $("messages").innerHTML="";
+ messages=[];
+ return data.id;
 }
 
 async function openChat(id){
-currentChatId=id;
-const chat=chats.find(c=>c.id===id);
-$("topTitle").textContent=chat?.title||"Sohbet";
-$("welcome").classList.add("hidden");
-$("messages").innerHTML="";
-messages=[];
-renderChats();
-closeSidebar();
+ currentChatId=id;
+ showingProjects=false;
+ $("projectView").classList.add("hidden");
+ $("chatArea").classList.remove("hidden");
+ $("composerWrap").classList.remove("hidden");
 
-const {data,error}=await client.from("messages")
-.select("id,chat_id,role,content,metadata,created_at")
-.eq("chat_id",id)
-.order("created_at",{ascending:true});
+ const chat=chats.find(c=>c.id===id);
+ $("topTitle").textContent=chat?.title||"Sohbet";
+ $("welcome").classList.add("hidden");
+ $("messages").innerHTML="";
+ messages=[];
+ renderChats();
+ closeSidebar();
 
-if(error){
-alert("Mesajlar yüklenemedi: "+error.message);
-return;
+ const {data,error}=await client.from("messages")
+  .select("id,chat_id,role,content,metadata,created_at")
+  .eq("chat_id",id)
+  .order("created_at",{ascending:true});
+
+ if(error){
+  alert("Mesajlar yüklenemedi: "+error.message);
+  return;
+ }
+
+ messages=data||[];
+ messages.forEach(renderMessage);
+ scrollBottom();
 }
 
-messages=data||[];
-messages.forEach(renderMessage);
-scrollBottom();
+async function renameChat(id){
+ const chat=chats.find(c=>c.id===id);
+ if(!chat)return;
+
+ const next=prompt("Yeni sohbet adı:",chat.title||"Yeni sohbet");
+ if(next===null)return;
+
+ const title=next.trim().slice(0,80);
+ if(!title){
+  alert("Sohbet adı boş olamaz.");
+  return;
+ }
+
+ const {error}=await client.from("chats")
+  .update({title})
+  .eq("id",id)
+  .eq("user_id",currentSession.user.id);
+
+ if(error){
+  alert("Sohbet adı değiştirilemedi: "+error.message);
+  return;
+ }
+
+ chat.title=title;
+ if(currentChatId===id)$("topTitle").textContent=title;
+ renderChats();
 }
 
-/* MESAJLAR */
+async function deleteChat(id){
+ if(!confirm("Bu sohbet ve içindeki mesajlar silinsin mi?"))return;
+
+ const {error}=await client.from("chats")
+  .delete()
+  .eq("id",id)
+  .eq("user_id",currentSession.user.id);
+
+ if(error){
+  alert("Sohbet silinemedi: "+error.message);
+  return;
+ }
+
+ chats=chats.filter(c=>c.id!==id);
+ if(currentChatId===id)newChat();
+ renderChats();
+}
+
+/* MESAJ GÖRÜNÜMÜ */
 function renderMessage(message){
-const row=document.createElement("div");
-row.className="msg "+(message.role==="user"?"user":"assistant");
+ const row=document.createElement("div");
+ row.className="msg "+(message.role==="user"?"user":"assistant");
 
-const avatar=document.createElement("div");
-avatar.className="msg-avatar";
-avatar.textContent=message.role==="user"?"S":"V";
+ const avatar=document.createElement("div");
+ avatar.className="msg-avatar";
+ avatar.textContent=message.role==="user"
+  ?(currentUsername.charAt(0).toUpperCase()||"S"):"S";
 
-const body=document.createElement("div");
-body.className="msg-content";
+ const body=document.createElement("div");
+ body.className="msg-content";
 
-const role=document.createElement("div");
-role.className="msg-role";
-role.textContent=message.role==="user"?"Sen":"StableVex";
+ const role=document.createElement("div");
+ role.className="msg-role";
+ role.textContent=message.role==="user"?currentUsername:"StableVex";
 
-const text=document.createElement("div");
-text.className="msg-text";
-text.textContent=message.content;
+ const text=document.createElement("div");
+ text.className="msg-text";
+ text.textContent=message.content;
 
-body.append(role,text);
+ body.append(role,text);
 
-if(message.role==="user"){
-const note=document.createElement("div");
-note.className="pending-note";
-note.textContent="Mesajın kaydedildi. Yapay zekâ yanıt sistemi henüz bağlanmadı.";
-body.appendChild(note);
+ if(message.role==="assistant"){
+  const actions=document.createElement("div");
+  actions.className="msg-actions";
+
+  const copy=document.createElement("button");
+  copy.textContent="Kopyala";
+  copy.onclick=async()=>{
+   try{
+    await navigator.clipboard.writeText(message.content);
+    copy.textContent="Kopyalandı";
+    setTimeout(()=>copy.textContent="Kopyala",1300);
+   }catch{
+    alert("Kopyalama desteklenmiyor.");
+   }
+  };
+
+  actions.append(copy);
+  body.append(actions);
+ }
+
+ row.append(avatar,body);
+ $("messages").appendChild(row);
+ return row;
 }
 
-row.append(avatar,body);
-$("messages").appendChild(row);
+function addLoading(){
+ const row=document.createElement("div");
+ row.className="msg";
+ row.id="assistantLoading";
+ const avatar=document.createElement("div");
+ avatar.className="msg-avatar";
+ avatar.textContent="S";
+ const body=document.createElement("div");
+ body.className="msg-content";
+ const role=document.createElement("div");
+ role.className="msg-role";
+ role.textContent="StableVex";
+ const dots=document.createElement("div");
+ dots.className="loading-dots";
+ dots.textContent="● ● ●";
+ body.append(role,dots);
+ row.append(avatar,body);
+ $("messages").appendChild(row);
+ scrollBottom();
+}
+
+function removeLoading(){
+ $("assistantLoading")?.remove();
+}
+
+/* AI İSTEĞİ */
+async function requestAI(){
+ const history=messages.slice(-18).map(m=>({
+  role:m.role,
+  content:m.content
+ }));
+
+ const {data,error}=await client.functions.invoke("stablevex-chat",{
+  body:{
+   messages:history,
+   profile:selectedProfile
+  }
+ });
+
+ if(error)throw new Error(error.message||"AI bağlantısı başarısız.");
+
+ if(!data||data.success!==true){
+  throw new Error(data?.error||data?.message||"Yapay zekâ yanıt veremedi.");
+ }
+
+ if(typeof data.answer!=="string"||!data.answer.trim()){
+  throw new Error("Yapay zekâ boş yanıt döndürdü.");
+ }
+
+ isOwner=!!data.isOwner;
+
+ if(typeof data.remaining==="number"){
+  $("usageText").textContent=isOwner
+   ?"Kurucu hesabı"
+   :data.remaining+" mesaj kaldı";
+ }
+
+ return data;
 }
 
 async function sendMessage(){
-if(busy)return;
+ if(busy)return;
 
-const content=$("messageInput").value.trim();
-if(!content)return;
-if(!currentSession)return;
+ const content=$("messageInput").value.trim();
+ if(!content||!currentSession)return;
 
-busy=true;
-$("sendBtn").disabled=true;
+ busy=true;
+ $("sendBtn").disabled=true;
 
-let chatId=currentChatId;
-if(!chatId){
-chatId=await createChat();
-if(!chatId){
-busy=false;
-$("sendBtn").disabled=false;
-return;
-}
-}
+ let chatId=currentChatId;
+ if(!chatId){
+  chatId=await createChat();
+  if(!chatId){
+   busy=false;
+   $("sendBtn").disabled=false;
+   return;
+  }
+ }
 
-const {data,error}=await client.from("messages").insert({
-chat_id:chatId,
-role:"user",
-content:content,
-metadata:{}
-}).select("id,chat_id,role,content,metadata,created_at").single();
+ $("messageInput").value="";
+ $("messageInput").style.height="42px";
 
-if(error){
-alert("Mesaj kaydedilemedi: "+error.message);
-busy=false;
-$("sendBtn").disabled=false;
-return;
-}
+ const {data:userMessage,error:userError}=await client.from("messages")
+  .insert({
+   chat_id:chatId,
+   role:"user",
+   content,
+   metadata:{}
+  })
+  .select("id,chat_id,role,content,metadata,created_at")
+  .single();
 
-$("messageInput").value="";
-$("messageInput").style.height="42px";
-messages.push(data);
-renderMessage(data);
+ if(userError){
+  alert("Mesaj kaydedilemedi: "+userError.message);
+  busy=false;
+  $("sendBtn").disabled=false;
+  return;
+ }
 
-/* İlk mesajdan sohbet başlığı üret */
-const chat=chats.find(c=>c.id===chatId);
-if(chat&&chat.title==="Yeni sohbet"){
-const title=content.slice(0,45);
-const {error:updateError}=await client.from("chats")
-.update({title})
-.eq("id",chatId)
-.eq("user_id",currentSession.user.id);
+ messages.push(userMessage);
+ renderMessage(userMessage);
 
-if(!updateError){
-chat.title=title;
-$("topTitle").textContent=title;
-renderChats();
-}
-}
+ const chat=chats.find(c=>c.id===chatId);
+ if(chat&&chat.title==="Yeni sohbet"){
+  const title=content.slice(0,45);
+  const {error:updateError}=await client.from("chats")
+   .update({title})
+   .eq("id",chatId)
+   .eq("user_id",currentSession.user.id);
 
-scrollBottom();
-busy=false;
-$("sendBtn").disabled=false;
+  if(!updateError){
+   chat.title=title;
+   $("topTitle").textContent=title;
+   renderChats();
+  }
+ }
+
+ addLoading();
+ scrollBottom();
+
+ try{
+  const result=await requestAI();
+  removeLoading();
+
+  const assistantMessage={
+   chat_id:chatId,
+   role:"assistant",
+   content:result.answer,
+   metadata:{
+    profile:result.profile||selectedProfile,
+    model:result.model||null
+   }
+  };
+
+  const {data:saved,error:saveError}=await client.from("messages")
+   .insert(assistantMessage)
+   .select("id,chat_id,role,content,metadata,created_at")
+   .single();
+
+  if(saveError){
+   console.error("AI yanıtı kaydedilemedi:",saveError);
+   assistantMessage.id="temporary-"+Date.now();
+   assistantMessage.created_at=new Date().toISOString();
+   messages.push(assistantMessage);
+   renderMessage(assistantMessage);
+  }else{
+   messages.push(saved);
+   renderMessage(saved);
+  }
+
+  if(result.isOwner){
+   $("projectsBtn").classList.remove("hidden");
+  }
+
+ }catch(error){
+  removeLoading();
+  const errorText="Yanıt alınamadı: "+showMessageError(error);
+  const errorRow={
+   id:"error-"+Date.now(),
+   role:"assistant",
+   content:errorText
+  };
+  messages.push(errorRow);
+  renderMessage(errorRow);
+ }finally{
+  busy=false;
+  $("sendBtn").disabled=false;
+  $("messageInput").focus();
+  scrollBottom();
+ }
 }
 
 function scrollBottom(){
-$("chatArea").scrollTop=$("chatArea").scrollHeight;
+ $("chatArea").scrollTop=$("chatArea").scrollHeight;
 }
 
 function newChat(){
-currentChatId=null;
-messages=[];
-$("messages").innerHTML="";
-$("welcome").classList.remove("hidden");
-$("topTitle").textContent="Yeni sohbet";
-renderChats();
-closeSidebar();
-$("messageInput").focus();
+ if(busy)return;
+ currentChatId=null;
+ messages=[];
+ showingProjects=false;
+ $("projectView").classList.add("hidden");
+ $("chatArea").classList.remove("hidden");
+ $("composerWrap").classList.remove("hidden");
+ $("messages").innerHTML="";
+ $("welcome").classList.remove("hidden");
+ $("topTitle").textContent="Yeni sohbet";
+ $("welcomeSubtitle").textContent=randomItem(greetingPool);
+ renderChats();
+ closeSidebar();
+ $("messageInput").focus();
+}
+
+/* PROJE EKRANI */
+function showProjects(){
+ if(!isOwner)return;
+ showingProjects=true;
+ $("chatArea").classList.add("hidden");
+ $("composerWrap").classList.add("hidden");
+ $("projectView").classList.remove("hidden");
+ $("topTitle").textContent="Proje alanı";
+ closeSidebar();
+}
+
+function backToChat(){
+ showingProjects=false;
+ $("projectView").classList.add("hidden");
+ $("chatArea").classList.remove("hidden");
+ $("composerWrap").classList.remove("hidden");
+ $("topTitle").textContent=currentChatId
+  ?(chats.find(c=>c.id===currentChatId)?.title||"Sohbet")
+  :"Yeni sohbet";
 }
 
 /* TEMA */
 function toggleTheme(){
-document.body.classList.toggle("light");
-const light=document.body.classList.contains("light");
-localStorage.setItem("stablevex_theme",light?"light":"dark");
+ document.body.classList.toggle("light");
+ const light=document.body.classList.contains("light");
+ localStorage.setItem("stablevex_theme",light?"light":"dark");
 }
 
 function loadTheme(){
-if(localStorage.getItem("stablevex_theme")==="light"){
-document.body.classList.add("light");
-}
+ if(localStorage.getItem("stablevex_theme")==="light"){
+  document.body.classList.add("light");
+ }
 }
 
 /* YAN MENÜ */
-function openSidebar(){
-$("sidebar").classList.add("open");
-}
-function closeSidebar(){
-$("sidebar").classList.remove("open");
-}
+function openSidebar(){$("sidebar").classList.add("open")}
+function closeSidebar(){$("sidebar").classList.remove("open")}
 
 /* ÇIKIŞ */
 async function logout(){
-const {error}=await client.auth.signOut();
-if(error)alert(error.message);
+ if(busy){
+  alert("Yanıt hazırlanırken çıkış yapamazsın.");
+  return;
+ }
+ const {error}=await client.auth.signOut();
+ if(error)alert(error.message);
 }
 
 /* OLAYLAR */
 $("loginBtn").onclick=login;
 $("signupBtn").onclick=signup;
-$("googleBtn").onclick=googleLogin;
+$("googleLoginBtn").onclick=()=>googleAuth("login");
+$("googleSignupBtn").onclick=()=>googleAuth("signup");
+$("showSignupBtn").onclick=()=>{
+ setMessage("loginMessage","");
+ showAuthPanel("signupPanel");
+};
+$("showLoginBtn").onclick=()=>{
+ setMessage("signupMessage","");
+ showAuthPanel("loginPanel");
+};
 $("usernameBtn").onclick=claimUsername;
 $("logoutBtn").onclick=logout;
+$("settingsLogoutBtn").onclick=logout;
 
 $("newChatBtn").onclick=newChat;
 $("sendBtn").onclick=sendMessage;
@@ -741,46 +1160,55 @@ $("chatSearch").oninput=renderChats;
 
 $("openSidebar").onclick=openSidebar;
 $("closeSidebar").onclick=closeSidebar;
-
 $("themeBtn").onclick=toggleTheme;
 $("modalThemeBtn").onclick=toggleTheme;
 
-$("settingsBtn").onclick=()=> $("settingsModal").classList.remove("hidden");
-$("closeSettings").onclick=()=> $("settingsModal").classList.add("hidden");
+$("settingsBtn").onclick=()=>$("settingsModal").classList.remove("hidden");
+$("closeSettings").onclick=()=>$("settingsModal").classList.add("hidden");
+$("projectsBtn").onclick=showProjects;
+$("backToChatBtn").onclick=backToChat;
 
 $("messageInput").addEventListener("keydown",event=>{
-if(event.key==="Enter"&&!event.shiftKey){
-event.preventDefault();
-sendMessage();
-}
+ if(event.key==="Enter"&&!event.shiftKey){
+  event.preventDefault();
+  sendMessage();
+ }
 });
 
 $("messageInput").addEventListener("input",()=>{
-const input=$("messageInput");
-input.style.height="42px";
-input.style.height=Math.min(input.scrollHeight,160)+"px";
+ const input=$("messageInput");
+ input.style.height="42px";
+ input.style.height=Math.min(input.scrollHeight,170)+"px";
 });
 
 document.querySelectorAll(".suggestion").forEach(button=>{
-button.onclick=()=>{
-$("messageInput").value=button.dataset.prompt;
-$("messageInput").focus();
-};
+ button.onclick=()=>{
+  $("messageInput").value=button.dataset.prompt;
+  $("messageInput").focus();
+  $("messageInput").style.height="auto";
+  $("messageInput").style.height=Math.min($("messageInput").scrollHeight,170)+"px";
+ };
+});
+
+$("settingsModal").addEventListener("click",event=>{
+ if(event.target===$("settingsModal")){
+  $("settingsModal").classList.add("hidden");
+ }
 });
 
 /* BAŞLAT */
 loadTheme();
 
 client.auth.onAuthStateChange((event,session)=>{
-setTimeout(()=>updateScreen(session),0);
+ setTimeout(()=>updateScreen(session),0);
 });
 
 client.auth.getSession().then(({data,error})=>{
-if(error){
-$("loginMessage").textContent=error.message;
-return;
-}
-updateScreen(data.session);
+ if(error){
+  setMessage("loginMessage",showMessageError(error));
+  return;
+ }
+ updateScreen(data.session);
 });
 </script>
 </body>
