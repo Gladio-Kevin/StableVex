@@ -234,7 +234,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 <body>
 
-<!-- SVG LOGO: STABLEVEX'E ÖZEL -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
 <symbol id="stableMark" viewBox="0 0 100 100">
  <path d="M50 4 88 19v29c0 23-15 39-38 48C27 87 12 71 12 48V19L50 4Z"
@@ -246,7 +245,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 </symbol>
 </svg>
 
-<!-- GİRİŞ -->
 <section id="authScreen">
  <div class="auth-box">
   <div class="brand auth-brand">
@@ -296,7 +294,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
  </div>
 </section>
 
-<!-- UYGULAMA -->
 <section id="appScreen" class="hidden">
  <aside class="sidebar" id="sidebar">
   <div class="side-top">
@@ -343,7 +340,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
    <div class="content">
     <div class="welcome" id="welcome">
      <svg class="welcome-mark"><use href="#stableMark"/></svg>
-     <h1>Yeni macerana<br><span id="welcomeUsername">hoş geldin</span></h1>
+     <h1><span id="welcomeGreeting">Hoş geldin!</span></h1>
      <p id="welcomeSubtitle">Bugün hangi fikri hayata geçiriyoruz?</p>
 
      <div class="suggestions">
@@ -398,7 +395,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
  </main>
 </section>
 
-<!-- AYARLAR -->
 <div class="modal hidden" id="settingsModal">
  <div class="modal-box">
   <div class="modal-head">
@@ -447,17 +443,47 @@ let screenRequest=0;
 let isOwner=false;
 let selectedProfile="haiku";
 let showingProjects=false;
+let greetingSessionUserId=null;
 
 const greetingPool=[
- "Bugün hangi fikri hayata geçiriyoruz?",
- "Aklındaki fikri birlikte geliştirelim.",
- "Yeni bir şeyler üretmeye hazır mısın?",
- "Bugün ne üzerinde çalışmak istersin?",
- "Bir fikrin varsa başlayabiliriz."
+ "Hoş geldin, {username}!",
+ "Tekrar aramızdasın, {username}!",
+ "Yeniden hoş geldin, {username}!",
+ "Bugün neler yapacağız, {username}?",
+ "Selam {username}, başlayalım mı?",
+ "StableVex'e hoş geldin, {username}!",
+ "Hazırsan başlayalım, {username}!",
+ "Yeni fikirler için buradayız, {username}!",
+ "Seni yeniden görmek güzel, {username}!",
+ "Bugün ne geliştireceğiz, {username}?"
 ];
+
+const subtitlePool=[
+ "Bugün hangi fikri hayata geçiriyoruz?",
+ "Aklındaki fikirleri birlikte geliştirelim.",
+ "Yeni projeler için hazırız.",
+ "Bugün ne üzerinde çalışmak istersin?",
+ "Birlikte yeni şeyler üretelim.",
+ "Aklındaki projeye ilk adımı atalım.",
+ "Fikirlerini gerçeğe dönüştürmeye başlayalım."
+];
+
+let lastGreeting="";
 
 function randomItem(items){
  return items[Math.floor(Math.random()*items.length)];
+}
+
+function setWelcomeGreeting(){
+ let choices=greetingPool.filter(item=>item!==lastGreeting);
+ if(!choices.length)choices=greetingPool;
+
+ lastGreeting=randomItem(choices);
+
+ $("welcomeGreeting").textContent=
+  lastGreeting.replace("{username}",currentUsername);
+
+ $("welcomeSubtitle").textContent=randomItem(subtitlePool);
 }
 
 function setMessage(id,text){
@@ -543,9 +569,7 @@ async function signup(){
  }
 }
 
-/* GOOGLE GİRİŞ / KAYIT
-   OAuth sağlayıcısı yeni kullanıcıyı otomatik oluşturabilir.
-   Giriş seçeneğinde yeni hesap açıldığını anlarsak oturumu kapatırız. */
+/* GOOGLE GİRİŞ / KAYIT */
 async function googleAuth(mode){
  const key="stablevex_google_intent";
  sessionStorage.setItem(key,JSON.stringify({
@@ -632,6 +656,7 @@ async function updateScreen(session){
   chats=[];
   messages=[];
   isOwner=false;
+  greetingSessionUserId=null;
   showAuth();
   return;
  }
@@ -663,10 +688,14 @@ async function updateScreen(session){
  $("profileUsername").textContent="@"+currentUsername;
  $("profileEmail").textContent=session.user.email||"";
  $("avatarLetter").textContent=currentUsername.charAt(0).toUpperCase();
- $("welcomeUsername").textContent=currentUsername;
  $("settingsUsername").textContent="@"+currentUsername;
  $("settingsEmail").textContent=session.user.email||"";
- $("welcomeSubtitle").textContent=randomItem(greetingPool);
+
+ /* Her yeni oturumda bir kez farklı karşılama seç */
+ if(greetingSessionUserId!==session.user.id){
+  greetingSessionUserId=session.user.id;
+  setWelcomeGreeting();
+ }
 
  await loadChats();
 }
@@ -928,7 +957,8 @@ async function requestAI(){
   content:m.content
  }));
 
- const {data,error}=await client.functions.invoke("stablevex-chat",{
+ /* DİKKAT: Fonksiyon adı Supabase'deki isimle aynı */
+ const {data,error}=await client.functions.invoke("stablevex-chat-",{
   body:{
    messages:history,
    profile:selectedProfile
@@ -1083,7 +1113,6 @@ function newChat(){
  $("messages").innerHTML="";
  $("welcome").classList.remove("hidden");
  $("topTitle").textContent="Yeni sohbet";
- $("welcomeSubtitle").textContent=randomItem(greetingPool);
  renderChats();
  closeSidebar();
  $("messageInput").focus();
